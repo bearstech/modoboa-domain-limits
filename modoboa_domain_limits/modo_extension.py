@@ -6,7 +6,7 @@ from modoboa.lib.exceptions import ModoboaException
 from modoboa.core.extensions import ModoExtension, exts_pool
 
 from .models import DomainLimit
-from .forms import DomainLimitsForm
+from .forms import DomainLimitsForm, DomainLimitsReadonlyForm
 
 
 class MailboxLimitReached(ModoboaException):
@@ -31,11 +31,18 @@ class MailboxAliasLimitReached(ModoboaException):
 
 @events.observe("ExtraDomainForm")
 def extra_domain_form(user, domain=None):
-    return [{
-        'id': "domain_limits",
-        'title': _("Domain limits"),
-        'cls': DomainLimitsForm
-    }]
+    if (user.group == 'SuperAdmins'):
+        return [{
+            'id': "domain_limits",
+            'title': _("Domain limits"),
+            'cls': DomainLimitsForm
+        }]
+    else:
+        return [{
+            'id': "domain_limits",
+            'title': _("Domain limits"),
+            'cls': DomainLimitsReadonlyForm
+        }]
 
 
 @events.observe("FillDomainInstances")
