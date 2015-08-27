@@ -74,6 +74,7 @@ exts_pool.register_extension(DomainLimits)
 @events.observe('MailboxCreated')
 def mailbox_created(user, mailbox):
     if (
+        (hasattr(mailbox.domain, 'domainlimit')) and
         (mailbox.domain.domainlimit.mail_limit != -1) and
         (mailbox.domain.mailbox_count > mailbox.domain.domainlimit.mail_limit)
     ):
@@ -83,6 +84,7 @@ def mailbox_created(user, mailbox):
 @events.observe('MailboxAliasCreated')
 def mailbox_alias_created(user, mailboxalias):
     if (
+        (hasattr(mailboxalias.domain, 'domainlimit')) and
         (mailboxalias.domain.domainlimit.alias_limit != -1) and
         (mailboxalias.domain.mbalias_count >
             mailboxalias.domain.domainlimit.alias_limit)
