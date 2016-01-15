@@ -1,5 +1,5 @@
 from django.db import models
-from modoboa_admin.models.domain import Domain
+from modoboa.admin.models.domain import Domain
 
 
 class DomainLimit(models.Model):
