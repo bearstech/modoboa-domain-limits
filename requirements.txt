@@ -1,2 +1,1 @@
-modoboa>=1.3.0
-modoboa-admin
+modoboa>=1.4.2
